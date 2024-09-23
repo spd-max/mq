@@ -1,0 +1,10 @@
+namespace MyMqApp.Models
+{
+    public class MyPocoModel
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
+        // Other fields...
+    }
+}
