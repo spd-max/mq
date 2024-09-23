@@ -1,0 +1,21 @@
+using System;
+
+namespace MyMqApp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Logger.Log("Application starting...");
+
+            var mqSubscriber = new MqSubscriber(
+                ConfigurationManager.AppSettings["MQQueueManagerName"],
+                ConfigurationManager.AppSettings["MQQueueName"],
+                ConfigurationManager.AppSettings["MQChannel"],
+                Convert.ToInt32(ConfigurationManager.AppSettings["MQPort"])
+            );
+
+            mqSubscriber.StartListening();
+        }
+    }
+}
