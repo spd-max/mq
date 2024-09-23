@@ -1,0 +1,59 @@
+using IBM.WMQ;
+using System;
+using System.Threading;
+
+namespace MyMqApp.Services
+{
+    public class MqSubscriber
+    {
+        private MQQueueManager queueManager;
+        private string queueName;
+
+        public MqSubscriber(string queueManagerName, string queueName, string channelInfo, int port)
+        {
+            this.queueName = queueName;
+            // Create MQQueueManager based on configuration
+            // Establish connection
+        }
+
+        public void StartListening()
+        {
+            while (true)
+            {
+                try
+                {
+                    MQQueue queue = queueManager.AccessQueue(queueName, MQC.MQOO_INPUT_AS_Q_DEF);
+                    MQMessage message = new MQMessage();
+                    queue.Get(message);
+
+                    string xmlMessage = message.ReadString(message.MessageLength);
+
+                    // Process the XML message on a new thread
+                    ThreadPool.QueueUserWorkItem(ProcessMessage, xmlMessage);
+                }
+                catch (MQException ex)
+                {
+                    Logger.Log("Error reading from MQ: " + ex.Message);
+                    Reconnect();
+                }
+
+                Thread.Sleep(Convert.ToInt32(ConfigurationManager.AppSettings["MQPollingInterval"]));
+            }
+        }
+
+        private void ProcessMessage(object message)
+        {
+            var xml = message.ToString();
+            var converter = new XmlToPocoConverter();
+            var poco = converter.ConvertXmlToPoco(xml);
+
+            var dbService = new DatabaseService();
+            dbService.SaveToDatabase(poco);
+        }
+
+        private void Reconnect()
+        {
+            // Logic to reconnect to the MQ if the connection fails
+        }
+    }
+}
