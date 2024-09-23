@@ -1,0 +1,19 @@
+using NLog;
+
+namespace MyMqApp.Utils
+{
+    public static class Logger
+    {
+        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
+
+        public static void Log(string message)
+        {
+            logger.Info(message);
+        }
+
+        public static void LogError(string message)
+        {
+            logger.Error(message);
+        }
+    }
+}
