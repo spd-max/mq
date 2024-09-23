@@ -1,0 +1,22 @@
+using Dapper;
+using System.Data.SqlClient;
+using MyMqApp.Models;
+
+namespace MyMqApp.Services
+{
+    public class DatabaseService
+    {
+        private string connectionString = ConfigurationManager.AppSettings["DBConnectionString"];
+
+        public void SaveToDatabase(MyPocoModel poco)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                var sql = "INSERT INTO MyTable (Id, Name, CreatedDate) VALUES (@Id, @Name, @CreatedDate)";
+                connection.Execute(sql, poco);
+            }
+        }
+    }
+}
