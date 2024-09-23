@@ -1,0 +1,16 @@
+[TestClass]
+public class XmlToPocoConverterTests
+{
+    [TestMethod]
+    public void ConvertXmlToPoco_ValidXml_ShouldReturnCorrectPoco()
+    {
+        var xml = "<Message><Id>1</Id><Name>Test</Name><CreatedDate>2024-09-23</CreatedDate></Message>";
+        var converter = new XmlToPocoConverter();
+        
+        var result = converter.ConvertXmlToPoco(xml);
+        
+        Assert.AreEqual(1, result.Id);
+        Assert.AreEqual("Test", result.Name);
+        Assert.AreEqual(new DateTime(2024, 9, 23), result.CreatedDate);
+    }
+}
