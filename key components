@@ -1,0 +1,10 @@
+Key Components:
+
+    MQ Subscriber: Listens to the IBM MQ queue.
+    POCO Model: Represents the structure of the incoming XML message.
+    XML to POCO Converter: Converts the incoming XML message to a POCO model using XPath.
+    Database Writer: Converts the POCO model to SQL instructions using Dapper.
+    Reconnection Logic: Handles reconnection attempts for both MQ and the database.
+    Multithreading: Processes each message in a separate thread.
+    Logging: Logs information using a logger framework like NLog or Log4Net.
+    Unit Testing: Test methods to verify correctness.
