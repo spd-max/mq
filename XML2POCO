@@ -1,0 +1,22 @@
+using System.Xml;
+
+namespace MyMqApp.Services
+{
+    public class XmlToPocoConverter
+    {
+        public MyPocoModel ConvertXmlToPoco(string xmlMessage)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xmlMessage);
+
+            var poco = new MyPocoModel
+            {
+                Id = int.Parse(doc.SelectSingleNode("//Id").InnerText),
+                Name = doc.SelectSingleNode("//Name").InnerText,
+                CreatedDate = DateTime.Parse(doc.SelectSingleNode("//CreatedDate").InnerText)
+            };
+
+            return poco;
+        }
+    }
+}
