@@ -1,0 +1,17 @@
+MyMqApp
+│
+├── Models
+│   └── MyPocoModel.cs      // POCO Model for XML message
+│
+├── Services
+│   ├── MqSubscriber.cs     // Subscribes to MQ and receives messages
+│   ├── XmlToPocoConverter.cs // Converts XML to POCO object using XPath
+│   ├── DatabaseService.cs  // Writes POCO object to database using Dapper
+│   └── ReconnectionLogic.cs// Handles reconnection logic for MQ and DB
+│
+├── Utils
+│   ├── Logger.cs           // Logger setup for the application
+│   └── ConfigManager.cs    // Configuration manager for settings
+│
+├── Program.cs              // Application entry point
+└── App.config              // Configuration file for MQ and DB settings
